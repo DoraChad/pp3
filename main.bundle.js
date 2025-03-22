@@ -41408,6 +41408,7 @@
         (nk = new WeakMap()),
         //DORACHAD
         (ppk = new WeakMap()),
+        (pppk = new WeakMap()),
         //
         (ik = new WeakMap()),
         (rk = new WeakMap()),
@@ -41426,6 +41427,7 @@
         (vk = new WeakMap()),
         (wk = new WeakMap()),
         (Gx = new WeakSet()),
+        //DORACHAD
         (Ak = function (e, t, n, i, r, a = null) {
           const s = document.createElement("div");
           let o;
@@ -41436,6 +41438,11 @@
             case "community":
               o = kk(this, ck, "f");
               break;
+              //
+            case "poly":
+              o = kk(this, pppk, "f");
+              break;
+              //
             case "custom":
               o = kk(this, hk, "f");
           }
@@ -41449,6 +41456,11 @@
               case "community":
                 t = kk(this, sk, "f");
                 break;
+                //
+              case "poly":
+                t = kk(this, pppk, "f");
+                break;
+                //
               case "custom":
                 t = kk(this, ok, "f");
             }

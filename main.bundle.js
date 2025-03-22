@@ -41549,30 +41549,40 @@
             buttonContainer: s,
           });
         }),
-        (yk = function (e) {
-          (Ek = e),
+        //DORACHAD
+        (yk = function(e) {
+            Ek = e,
             kk(this, Jx, "f").saveTrackSelectionTab(Ek),
-            "official" == e
-              ? (kk(this, nk, "f").classList.add("selected"),
-                kk(this, ik, "f").classList.remove("selected"),
-                kk(this, rk, "f").classList.remove("selected"),
-                kk(this, ak, "f").classList.add("open"),
-                kk(this, sk, "f").classList.remove("open"),
-                kk(this, ok, "f").classList.remove("open"))
-              : "community" == e
-              ? (kk(this, nk, "f").classList.remove("selected"),
-                kk(this, ik, "f").classList.add("selected"),
-                kk(this, rk, "f").classList.remove("selected"),
-                kk(this, ak, "f").classList.remove("open"),
-                kk(this, sk, "f").classList.add("open"),
-                kk(this, ok, "f").classList.remove("open"))
-              : (kk(this, nk, "f").classList.remove("selected"),
-                kk(this, ik, "f").classList.remove("selected"),
-                kk(this, rk, "f").classList.add("selected"),
-                kk(this, ak, "f").classList.remove("open"),
-                kk(this, sk, "f").classList.remove("open"),
-                kk(this, ok, "f").classList.add("open"));
+            "official" == e ? (kk(this, nk, "f").classList.add("selected"),
+            kk(this, ik, "f").classList.remove("selected"),
+            kk(this, rk, "f").classList.remove("selected"),
+            kk(this, ppk, "f").classList.remove("selected"),
+            kk(this, ak, "f").classList.add("open"),
+            kk(this, sk, "f").classList.remove("open"),
+            kk(this, ok, "f").classList.remove("open")) :
+            "poly" == e ? (kk(this, nk, "f").classList.remove("selected"),
+            kk(this, ik, "f").classList.remove("selected"),
+            kk(this, rk, "f").classList.remove("selected"),
+            kk(this, ppk, "f").classList.add("selected"),
+            kk(this, ak, "f").classList.remove("open"),
+            kk(this, sk, "f").classList.remove("open"),
+            kk(this, ok, "f").classList.remove("open")) :
+            "community" == e ? (kk(this, nk, "f").classList.remove("selected"),
+            kk(this, ik, "f").classList.add("selected"),
+            kk(this, rk, "f").classList.remove("selected"),
+            kk(this, ppk, "f").classList.remove("selected"),
+            kk(this, ak, "f").classList.remove("open"),
+            kk(this, sk, "f").classList.add("open"),
+            kk(this, ok, "f").classList.remove("open")) :
+            (kk(this, nk, "f").classList.remove("selected"),
+            kk(this, ik, "f").classList.remove("selected"),
+            kk(this, rk, "f").classList.add("selected"),
+            kk(this, ppk, "f").classList.remove("selected"),
+            kk(this, ak, "f").classList.remove("open"),
+            kk(this, sk, "f").classList.remove("open"),
+            kk(this, ok, "f").classList.add("open"))
         }),
+        //
         (bk = function () {
           const e = kk(this, uk, "f").value.trim().toLowerCase();
           for (const t of kk(this, dk, "f"))

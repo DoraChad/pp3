@@ -41348,6 +41348,7 @@
         //DORACHAD
         ppk,
         pppk,
+        lpk,
         //
         ik,
         rk,
@@ -41410,6 +41411,7 @@
         //DORACHAD
         (ppk = new WeakMap()),
         (pppk = new WeakMap()),
+        (lpk = new WeakMap()),
         //
         (ik = new WeakMap()),
         (rk = new WeakMap()),
@@ -41441,7 +41443,7 @@
               break;
               //
             case "poly":
-              o = kk(this, pppk, "f");
+              o = kk(this, lpk, "f");
               break;
               //
             case "custom":
@@ -41572,6 +41574,7 @@
             kk(this, ppk, "f").classList.remove("selected"),
             kk(this, ak, "f").classList.add("open"),
             kk(this, sk, "f").classList.remove("open"),
+            kk(this, pppk, "f").classList.remove("open"),
             kk(this, ok, "f").classList.remove("open")) :
             "poly" == e ? (kk(this, nk, "f").classList.remove("selected"),
             kk(this, ik, "f").classList.remove("selected"),
@@ -41579,6 +41582,7 @@
             kk(this, ppk, "f").classList.add("selected"),
             kk(this, ak, "f").classList.remove("open"),
             kk(this, sk, "f").classList.remove("open"),
+            kk(this, pppk, "f").classList.add("open"),
             kk(this, ok, "f").classList.remove("open")) :
             "community" == e ? (kk(this, nk, "f").classList.remove("selected"),
             kk(this, ik, "f").classList.add("selected"),
@@ -41586,6 +41590,7 @@
             kk(this, ppk, "f").classList.remove("selected"),
             kk(this, ak, "f").classList.remove("open"),
             kk(this, sk, "f").classList.add("open"),
+            kk(this, pppk, "f").classList.remove("open"),
             kk(this, ok, "f").classList.remove("open")) :
             (kk(this, nk, "f").classList.remove("selected"),
             kk(this, ik, "f").classList.remove("selected"),
@@ -41593,6 +41598,7 @@
             kk(this, ppk, "f").classList.remove("selected"),
             kk(this, ak, "f").classList.remove("open"),
             kk(this, sk, "f").classList.remove("open"),
+            kk(this, pppk, "f").classList.remove("open"),
             kk(this, ok, "f").classList.add("open"))
         }),
         //
@@ -41602,7 +41608,9 @@
             t.trackMetadata.name.toLowerCase().includes(e)
               ? (t.buttonContainer.style.display = "")
               : (t.buttonContainer.style.display = "none");
-          for (const e of ["official", "community", "custom"]) {
+              //DORACHAD
+          for (const e of ["official", "community", "custom", "poly"]) {
+            //
             let t;
             switch (e) {
               case "official":
@@ -41611,6 +41619,11 @@
               case "community":
                 t = kk(this, ck, "f");
                 break;
+                //DORACHAD
+              case "poly":
+                t = kk(this, lpk, "f");
+                break;
+                //
               case "custom":
                 t = kk(this, hk, "f");
             }
@@ -41629,8 +41642,9 @@
             kk(this, dk, "f")
               .filter((e) => e.category == Ek)
               .every((e) => "none" == e.buttonContainer.style.display))
-          )
-            for (const e of ["official", "community", "custom"])
+          )//DORACHAD
+            for (const e of ["official", "community", "custom", "poly"])
+                //
               if (
                 kk(this, dk, "f").some(
                   (t) =>
@@ -41658,6 +41672,8 @@
             nk.set(this, void 0),
             //DORACHAD
             ppk.set(this, void 0),
+            pppk.set(this, void 0),
+            lpk.set(this, new Map()),
             //
             ik.set(this, void 0),
             rk.set(this, void 0),
@@ -41871,6 +41887,15 @@
               },
               { passive: !0 }
             ),
+            //DORACHAD
+            kk(this, pppk, "f").addEventListener(
+                "scroll",
+                () => {
+                  PPPPK = kk(this, pppk, "f").scrollTop;
+                },
+                { passive: !0 }
+            ),
+            //
             kk(this, ok, "f").addEventListener(
               "scroll",
               () => {
@@ -41911,42 +41936,65 @@
             xk(this, fk, !0, "f"),
             kk(this, mk, "f") || this.refresh(),
             null == Ek && (Ek = kk(this, Jx, "f").loadTrackSelectionTab()),
+            //DORACHAD
             "official" == Ek
               ? (kk(this, nk, "f").classList.add("selected"),
                 kk(this, ik, "f").classList.remove("selected"),
+                kk(this, ppk, "f").classList.remove("selected"),
                 kk(this, rk, "f").classList.remove("selected"),
                 kk(this, ak, "f").classList.add("open"),
                 kk(this, sk, "f").classList.remove("open"),
+                kk(this, pppk, "f").classList.remove("open"),
                 kk(this, ok, "f").classList.remove("open"),
                 (kk(this, ak, "f").scrollTop = Sk))
               : "community" == Ek
               ? (kk(this, nk, "f").classList.remove("selected"),
                 kk(this, ik, "f").classList.add("selected"),
+                kk(this, ppk, "f").classList.remove("selected"),
                 kk(this, rk, "f").classList.remove("selected"),
                 kk(this, ak, "f").classList.remove("open"),
                 kk(this, sk, "f").classList.add("open"),
+                kk(this, pppk, "f").classList.remove("open"),
                 kk(this, ok, "f").classList.remove("open"),
                 (kk(this, sk, "f").scrollTop = Mk))
+              : "poly" == Ek
+              ? (kk(this, nk, "f").classList.remove("selected"),
+                kk(this, ik, "f").classList.remove("selected"),
+                kk(this, ppk, "f").classList.add("selected"),
+                kk(this, rk, "f").classList.remove("selected"),
+                kk(this, ak, "f").classList.remove("open"),
+                kk(this, sk, "f").classList.remove("open"),
+                kk(this, pppk, "f").classList.add("open"),
+                kk(this, ok, "f").classList.remove("open"),
+                (kk(this, pppk, "f").scrollTop = PPPPK))
               : (kk(this, nk, "f").classList.remove("selected"),
                 kk(this, ik, "f").classList.remove("selected"),
+                kk(this, ppk, "f").classList.remove("selected"),
                 kk(this, rk, "f").classList.add("selected"),
                 kk(this, ak, "f").classList.remove("open"),
                 kk(this, sk, "f").classList.remove("open"),
+                kk(this, pppk, "f").classList.remove("open"),
                 kk(this, ok, "f").classList.add("open"),
                 (kk(this, ok, "f").scrollTop = Tk));
         }
+        //
         get isOpen() {
           return kk(this, fk, "f") || null != kk(this, pk, "f");
         }
+        //DORACHAD
         refresh() {
           if (
             (xk(this, dk, [], "f"),
             (kk(this, ak, "f").innerHTML = ""),
             (kk(this, sk, "f").innerHTML = ""),
             (kk(this, ok, "f").innerHTML = ""),
+            (kk(this, pppk, "f").innerHTML = ""),
             kk(this, lk, "f").clear(),
             kk(this, ck, "f").clear(),
             kk(this, hk, "f").clear(),
+            //
+            kk(this, lpk, "f").clear(),
+            //
             kk(this, Kx, "f").forEachOfficialTrack((e, t, n, i) => {
               kk(this, Gx, "m", Ak).call(this, "official", t, n, e, i);
             }),

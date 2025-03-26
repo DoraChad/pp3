@@ -53869,7 +53869,7 @@
         }
         getLeaderboard(e, t, n, i, r) {
           let a =
-            "https://api.allorigins.win/raw?url=https://vps.kodub.com:43274/" +
+            "https://script.google.com/macros/s/AKfycbzUSzDiulv4Vcjc3tePHxzqgLSMhGsszFoLyyh7xeJmTlcA9pAkICCorai_cmFM-0KY/exec?url=https://vps.kodub.com:43274/" +
             "leaderboard?version=" +
             nu +
             "&trackId=" +

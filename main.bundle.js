@@ -41721,7 +41721,7 @@
             xk(this, ik, document.createElement("button"), "f"),
             (kk(this, ik, "f").className = "button community"),
             kk(this, ik, "f").append(
-              document.createTextNode(kk(this, Qx, "f").get("Community tracks"))
+              document.createTextNode(kk(this, Qx, "f").get("Poliest Poly 3 tracks"))
             ),
             kk(this, ik, "f").addEventListener("click", () => {
               kk(this, Yx, "f").playUIClick(),
@@ -41749,7 +41749,7 @@
               xk(this, ppk, document.createElement("button"), "f"),
               (kk(this, ppk, "f").className = "button poly"),
               kk(this, ppk, "f").append(
-                document.createTextNode(kk(this, Qx, "f").get("Poliest Poly 3"))
+                document.createTextNode(kk(this, Qx, "f").get("Leaderboards"))
               ),
               kk(this, ppk, "f").addEventListener("click", () => {
                 kk(this, Yx, "f").playUIClick(),

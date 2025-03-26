@@ -28034,7 +28034,7 @@
       const Xd = JSON.parse('{"rE":"0.5.0","l$":{"r":3,"M":3}}');
       const Zd = "kodub",
         Jd = !1,
-        $d = "https://api.allorigins.win/raw?url=https://vps.kodub.com:43274/",
+        $d = "https://thingproxy.freeboard.io/fetch/https://vps.kodub.com:43274/",
         eu = Xd.l$.r;
       if (!Number.isSafeInteger(eu) || eu < 1)
         throw new Error(

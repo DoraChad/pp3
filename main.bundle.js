@@ -5,8 +5,8 @@ const trackNames = [
   
   
   const leaderboardUrls = [
-      "https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=4d0f964b159d51d6906478bbb87e1edad21b0f1eb2972af947be34f2d8c49ae9&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
-      "https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=0544f97453f7b0e2a310dfb0dcd331b4060ae2e9cb14ac27dc5367183dab0513&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
+      "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=4d0f964b159d51d6906478bbb87e1edad21b0f1eb2972af947be34f2d8c49ae9&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
+      "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=0544f97453f7b0e2a310dfb0dcd331b4060ae2e9cb14ac27dc5367183dab0513&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
       // Add all 25 URLs here...
   ];
   

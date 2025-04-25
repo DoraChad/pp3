@@ -236,6 +236,8 @@ const trackNames = [
           rgh.style.display = "flex";
           rgh.style.flexDirection = "column";
           rgh.style.right = "0";
+          rgh.style.marginLeft = "auto";
+          rgh.style.padding = "5%";
   
           const hh3 = document.createElement("p");
           

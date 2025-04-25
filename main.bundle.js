@@ -53006,25 +53006,11 @@ const trackNames = [
               .catch((e) => {
                 console.error(e);
               });
+              // PP3
             Promise.all(
-              [
-                "90_reset.track",
-                "arabica.track",
-                "clay_temples.track",
-                "concrete_jungle.track",
-                "desert_stallion.track",
-                "hyperions_sanctuary.track",
-                "las_calles.track",
-                "last_remnant.track",
-                "lu_muvimento.track",
-                "malformations.track",
-                "opal_place_ii.track",
-                "re_akina.track",
-                "sandline_ultimatum.track",
-                "snow_park.track",
-                "winter_hollow.track",
-              ].map((t) => RN(this, AN, "m", TN).call(this, t, e))
+              trackNames.map((t) => RN(this, AN, "m", TN).call(this, `${t}.track`, e))
             )
+            //
               .then((e) => {
                 IN(this, xN, e, "f");
               })

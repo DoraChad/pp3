@@ -219,8 +219,9 @@ const trackNames = [
   
           const lft = document.createElement("div");
           lft.className = "left";
-          lft.style.display = "inline-block";
-          lft.style.verticalAlign = "top";
+          lft.style.display = "flex";
+          lft.style.flexDirection = "column";
+          lft.style.justifyContent = "flex-end";
   
           const mdl = document.createElement("div");
           mdl.style.display = "inline-block";
@@ -42367,6 +42368,9 @@ const trackNames = [
         });
       const $k = class {
         constructor(e, t, n, i, r, a, s, o, l, c, h) {
+            //PP3
+            p3_l = this;
+            //
           mk.add(this),
             gk.set(this, void 0),
             vk.set(this, void 0),

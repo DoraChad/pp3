@@ -193,7 +193,7 @@ const trackNames = [
   
         playerListArray.sort((a, b) => {
             if (b.leaderboard_count !== a.leaderboard_count) {
-                return b.leaderboard_count - a.leboard_count;
+                return b.leaderboard_count - a.leaderboard_count;
             }
             return a.avgPlacement - b.avgPlacement;
         });

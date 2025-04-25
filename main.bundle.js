@@ -228,6 +228,10 @@ const trackNames = [
           mdl.style.display = "inline-block";
           mdl.style.verticalAlign = "top";
           mdl.className = "middle";
+          mdl.style.flex = "1 1 auto";
+          mdl.style.textOverflow = "ellipsis";
+          mdl.style.whiteSpace = "nowrap";
+          mdl.style.overflow = "hidden";
   
           const rgh = document.createElement("div");
           rgh.style.display = "inline-block";

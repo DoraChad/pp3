@@ -214,6 +214,7 @@ const trackNames = [
           lbc.style.backgroundColor = "#112052";
           lbc.style.color = "white";
           lbc.style.display = "flex";
+          lbc.style.alignItems = "center";
         
           //hh3.textContent = `${index + 1}. ${player.name} — ${player.leaderboard_count} track${player.leaderboard_count !== 1 ? 's' : ''}, avg place: ${player.avgPlacement.toFixed(2)}`;
   
@@ -244,14 +245,16 @@ const trackNames = [
   
           const hh4 = document.createElement("p");
           
-          hh4.style.padding = "15px";
-          hh4.style.fontSize = "25px";
+          hh4.style.padding = "10px";
+          hh4.style.fontSize = "20px";
+          hh4.style.margin = "0";
           hh4.textContent = `Completed: ${player.leaderboard_count}`
   
           const hh5 = document.createElement("p");
           
-          hh5.style.padding = "15px";
-          hh5.style.fontSize = "25px";
+          hh5.style.padding = "10px";
+          hh5.style.fontSize = "20px";
+          hh5.style.margin = "0";
           hh5.textContent = `Avg. Place: ${player.avgPlacement.toFixed(2)}`
   
           const hh6 = document.createElement("p");

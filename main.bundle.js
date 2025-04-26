@@ -20,8 +20,9 @@ const trackNames = [
   
   let pp3_l;
   
-  let pp3_timer
-  
+  let pp3_timer;
+
+  let pp3_user; 
   
   
   
@@ -50751,6 +50752,9 @@ const trackNames = [
         };
       class mL {
         constructor(e) {
+            //PP3
+          pp3_user = this;
+          //
           var t;
           sL.add(this),
             lL.set(this, void 0),

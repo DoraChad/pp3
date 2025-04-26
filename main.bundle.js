@@ -140,6 +140,8 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     md.style.margin = "0";
     md.style.zIndex = "2";
     md.className = "pp3leaderboard"
+
+    main.appendChild(md);
   
   
     const ld = document.createElement("div");
@@ -157,17 +159,23 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     ld.style.textAlign = "center";
     ld.style.fontWeight = "normal";
     ld.style.color = "white";
+
+    md.appendChild(ld);
   
     const h2 = document.createElement("h2");
     h2.textContent = "Event Leaderboard";
     h2.style.fontSize = "48px";
     h2.style.margin = "10px 10px 0 10px";
+
+    ld.appendChild(h2);
   
     const h3 = document.createElement("h3");
     h3.textContent = "Poliest Poly 3";
     h3.style.fontSize = "22px";
     h3.style.margin = "0 10px 10px 10px";
     h3.style.opacity = "0.5";
+
+    ld.appendChild(h3);
   
     const ct = document.createElement("div");
     ct.style.className = "container";
@@ -180,6 +188,8 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     ct.style.pointerEvents = "auto";
     //ct.style.width = "100%";
     //ct.style.height = "100%";
+
+    ld.appendChild(ct);
   
     fetchLeaderboards()
       .then(players => {
@@ -286,12 +296,6 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
           lbc.appendChild(rgh);
           ct.appendChild(lbc);
 
-          ld.appendChild(h2);
-          createCountdown(ld);
-          ld.appendChild(h3);
-          ld.appendChild(ct);
-          md.appendChild(ld);
-
           const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
           if (clientElement) {
               const topPos = clientElement.offsetTop;
@@ -306,6 +310,15 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     st.style.bottom = "0";
     st.style.textAlign = "left";
     st.style.position = "flex";
+
+    ld.appendChild(st);
+
+    const pq = document.createElement("img");
+    pq.src = "images/back.svg";
+    pq.style.margin = "-6px -4px 0 -4px";
+    pq.style.width = "32px";
+    pq.style.height = "32px";
+    pq.style.verticalAlign = "middle";
     
     const bk = document.createElement("button");
     bk.className = "pp3back-button";
@@ -323,6 +336,10 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
       removeElement("pp3leaderboard");
       pp3_l.show();
     });
+
+    bk.appendChild(pq);
+    bk.appendChild(document.createTextNode("Back"));
+    st.appendChild(bk);
   
     const bks = document.createElement("style");
     bks.textContent = `
@@ -345,22 +362,11 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
   
     document.head.appendChild(bks);
   
-    const pq = document.createElement("img");
-    pq.src = "images/back.svg";
-    pq.style.margin = "-6px -4px 0 -4px";
-    pq.style.width = "32px";
-    pq.style.height = "32px";
-    pq.style.verticalAlign = "middle";
+
   
+    createCountdown(ld);
 
-    st.appendChild(bk);
-    bk.appendChild(pq);
-    ld.appendChild(st);
-    bk.appendChild(document.createTextNode("Back"));
-    main.appendChild(md);
-
-
-  }
+  };
   
   
   

@@ -183,20 +183,21 @@ const trackNames = [
         const playerListArray = Object.entries(players).map(([userId, data]) => {
             const avgPlacement = data.positions.reduce((a, b) => a + b, 0) / data.positions.length;
             return {
-                userId,
+                userId, // include the userId in the object
                 name: data.name,
                 leaderboard_count: data.leaderboard_count,
                 positions: data.positions,
                 avgPlacement
             };
         });
-  
+        
         playerListArray.sort((a, b) => {
             if (b.leaderboard_count !== a.leaderboard_count) {
                 return b.leaderboard_count - a.leaderboard_count;
             }
             return a.avgPlacement - b.avgPlacement;
         });
+        
   
   
   
@@ -215,6 +216,7 @@ const trackNames = [
           lbc.style.color = "white";
           lbc.style.display = "flex";
           lbc.style.alignItems = "center";
+          lbc.id = player.userId;
         
           //hh3.textContent = `${index + 1}. ${player.name} — ${player.leaderboard_count} track${player.leaderboard_count !== 1 ? 's' : ''}, avg place: ${player.avgPlacement.toFixed(2)}`;
   
@@ -279,6 +281,11 @@ const trackNames = [
           ct.appendChild(lbc);
         });
       });
+    const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
+    if (clientElement) {
+        const topPos = clientElement.offsetTop;
+        ct.scrollTop = topPos;
+    };
   
   
     const st = document.createElement("div");

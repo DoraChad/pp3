@@ -142,8 +142,6 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     md.className = "pp3leaderboard"
 
     main.appendChild(md);
-    
-    createCountdown(ld);
   
     const ld = document.createElement("div");
     ld.className = "background";
@@ -162,6 +160,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     ld.style.color = "white";
 
     md.appendChild(ld);
+    createCountdown(ld);
   
     const h2 = document.createElement("h2");
     h2.textContent = "Event Leaderboard";

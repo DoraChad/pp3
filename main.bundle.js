@@ -300,6 +300,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
           if (clientElement) {
               const topPos = clientElement.offsetTop;
               ct.scrollTop = topPos;
+              clientElement.style.backgroundColor = "#2e4182";
           };
         });
       });

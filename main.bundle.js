@@ -282,11 +282,6 @@ const trackNames = [
           ct.appendChild(lbc);
         });
       });
-    const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
-    if (clientElement) {
-        const topPos = clientElement.offsetTop;
-        ct.scrollTop = topPos;
-    };
   
   
     const st = document.createElement("div");
@@ -350,6 +345,12 @@ const trackNames = [
     ld.appendChild(st);
     md.appendChild(ld);
     main.appendChild(md);
+
+    const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
+    if (clientElement) {
+        const topPos = clientElement.offsetTop;
+        ct.scrollTop = topPos;
+    };
   }
   
   

@@ -270,14 +270,14 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
           const hh4 = document.createElement("p");
           
           hh4.style.padding = "10px";
-          hh4.style.fontSize = "20px";
+          hh4.style.fontSize = "25px";
           hh4.style.margin = "0";
           hh4.textContent = `Completed: ${player.leaderboard_count}`
   
           const hh5 = document.createElement("p");
           
           hh5.style.padding = "10px";
-          hh5.style.fontSize = "20px";
+          hh5.style.fontSize = "25px";
           hh5.style.margin = "0";
           hh5.textContent = `Avg. Place: ${player.avgPlacement.toFixed(2)}`
   

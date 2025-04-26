@@ -285,6 +285,19 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
           lbc.appendChild(mdl);
           lbc.appendChild(rgh);
           ct.appendChild(lbc);
+
+          ld.appendChild(h2);
+          createCountdown(ld);
+          ld.appendChild(h3);
+          ld.appendChild(ct);
+          ld.appendChild(st);
+          md.appendChild(ld);
+
+          const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
+          if (clientElement) {
+              const topPos = clientElement.offsetTop;
+              ct.scrollTop = topPos;
+          };
         });
       });
   
@@ -340,22 +353,13 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     pq.style.height = "32px";
     pq.style.verticalAlign = "middle";
   
-    ld.appendChild(h2);
-    createCountdown(ld);
-    ld.appendChild(h3);
-    ld.appendChild(ct);
+
     st.appendChild(bk);
     bk.appendChild(pq);
     bk.appendChild(document.createTextNode("Back"));
-    ld.appendChild(st);
-    md.appendChild(ld);
     main.appendChild(md);
 
-    const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
-    if (clientElement) {
-        const topPos = clientElement.offsetTop;
-        ct.scrollTop = topPos;
-    };
+
   }
   
   

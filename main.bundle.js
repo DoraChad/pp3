@@ -160,13 +160,13 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     ld.style.color = "white";
 
     md.appendChild(ld);
-    createCountdown(ld);
   
     const h2 = document.createElement("h2");
     h2.textContent = "Event Leaderboard";
     h2.style.fontSize = "48px";
     h2.style.margin = "10px 10px 0 10px";
 
+    createCountdown(ld);
     ld.appendChild(h2);
   
     const h3 = document.createElement("h3");

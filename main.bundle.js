@@ -290,7 +290,6 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
           createCountdown(ld);
           ld.appendChild(h3);
           ld.appendChild(ct);
-          ld.appendChild(st);
           md.appendChild(ld);
 
           const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
@@ -356,6 +355,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
 
     st.appendChild(bk);
     bk.appendChild(pq);
+    ld.appendChild(st);
     bk.appendChild(document.createTextNode("Back"));
     main.appendChild(md);
 

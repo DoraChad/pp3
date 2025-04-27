@@ -229,7 +229,7 @@ aud.style.color = "white";
 aud.style.fontSize = "32px";
 aud.style.padding = "10px";
 
-main.appendChild(aud);
+md.appendChild(aud);
 
 aud.appendChild(document.createTextNode("AutoUpdate:"));
 
@@ -252,6 +252,14 @@ ppb1.style.border = "none";
 ppb1.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
 ppb1.style.cursor = "pointer";
 
+ppb1.addEventListener("click", () => {
+  if (!autoUpdate) {
+    autoUpdate = true;
+    ppb2.style.backgroundColor = "#112052";
+    ppb1.style.backgroundColor = "#334b77";
+  };
+});
+
 bw.appendChild(ppb1);
 
 const ppb2 = document.createElement("button");
@@ -267,6 +275,17 @@ ppb2.style.color = "white";
 ppb2.style.border = "none";
 ppb2.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
 ppb2.style.cursor = "pointer";
+
+ppb2.addEventListener("click", () => {
+  if (autoUpdate) {
+    autoUpdate = false;
+    ppb2.style.backgroundColor = "#334b77";
+    ppb1.style.backgroundColor = "#112052";
+  };
+});
+
+
+
 
 bw.appendChild(ppb2);
 

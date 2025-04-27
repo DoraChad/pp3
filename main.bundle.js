@@ -39,7 +39,7 @@ const suffix = "&skip=0&amount=500&onlyVerified=false";
 
 
 
-async function fetchLeaderboards() {
+async function fetchLeaderboards(ppb1, ppb2) {
 
   if (autoUpdate) {
 
@@ -297,7 +297,7 @@ bw.appendChild(ppb2);
 
 
 
-  fetchLeaderboards()
+  fetchLeaderboards(ppb1, ppb2)
     .then(players => {
 
             

@@ -166,7 +166,6 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     h2.style.fontSize = "48px";
     h2.style.margin = "10px 10px 0 10px";
 
-    createCountdown(ld);
     ld.appendChild(h2);
   
     const h3 = document.createElement("h3");
@@ -176,6 +175,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     h3.style.opacity = "0.5";
 
     ld.appendChild(h3);
+    createCountdown(ld);
   
     const ct = document.createElement("div");
     ct.style.className = "container";

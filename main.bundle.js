@@ -39,12 +39,10 @@ const suffix = "&skip=0&amount=500&onlyVerified=false";
 
 
 
-async function fetchLeaderboards(ppb1, ppb2) {
+async function fetchLeaderboards() {
 
   if (autoUpdate) {
 
-    ppb2.style.backgroundColor = "#112052";
-    ppb1.style.backgroundColor = "#334b77";
 
     for (const key in players) {
       delete players[key];
@@ -61,6 +59,8 @@ async function fetchLeaderboards(ppb1, ppb2) {
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+  } else {
+    return players;
   };
 }
 
@@ -221,7 +221,7 @@ ls.style.borderLeftColor = "white";
 ls.style.animation = "1s linear infinite forwards loading-spinner-spin";
 
 lc.appendChild(ls);
-
+/* 
 const aud = document.createElement("div");
 
 aud.style.display = "flex";
@@ -294,10 +294,10 @@ ppb2.addEventListener("click", () => {
 
 
 bw.appendChild(ppb2);
+ */
 
 
-
-  fetchLeaderboards(ppb1, ppb2)
+  fetchLeaderboards()
     .then(players => {
 
             

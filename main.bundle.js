@@ -5,11 +5,13 @@ const trackNames = [
   
   
   const leaderboardUrls = [
-      //"https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=4d0f964b159d51d6906478bbb87e1edad21b0f1eb2972af947be34f2d8c49ae9&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
-      //"https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=0544f97453f7b0e2a310dfb0dcd331b4060ae2e9cb14ac27dc5367183dab0513&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
-      // Add all 25 trackids here...
-      "448ce8e6d9c87ec5cca44b11b75e96f8b8bac65fe5f0f25e6e55f48df96e5d65",
-  ];
+    //"https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=4d0f964b159d51d6906478bbb87e1edad21b0f1eb2972af947be34f2d8c49ae9&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
+    //"https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=0544f97453f7b0e2a310dfb0dcd331b4060ae2e9cb14ac27dc5367183dab0513&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
+    "b16eb75a5b5536ad3eecf4e913078a934272e5398c3629fc03b9c46333f71978",
+    "3418bbba1e2cbfa263dcdca541e695a5403eac6a072ad9fa1cc965bd21faf814",
+    "c60098915d286adcfbc36d563fca0b054f0b1c49f8617e3527ef776b30a6b93f",
+    // Add all 25 URLs here...
+];
   
   //Event ending time in GMT (5/10/25, 1PM PST)
   const targetDateTime = new Date("2025-05-10T20:00:00Z").getTime();
@@ -33,7 +35,7 @@ const trackNames = [
   
 
 const prefix = "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=";
-const suffix = "&skip=0&amount=40&onlyVerified=false";
+const suffix = "&skip=0&amount=500&onlyVerified=false";
 
 
 const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));

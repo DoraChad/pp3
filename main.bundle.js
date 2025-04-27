@@ -310,7 +310,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     st.className = "bottom";
     st.style.bottom = "0";
     st.style.textAlign = "left";
-    st.style.position = "fixed";
+    st.style.position = "flex";
 
     ld.appendChild(st);
 

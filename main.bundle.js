@@ -42467,7 +42467,9 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
             Yk(this, _k, document.createElement("button"), "f"),
             (Kk(this, _k, "f").className = "button community"),
             Kk(this, _k, "f").append(
-              document.createTextNode(Kk(this, vk, "f").get("Community tracks"))
+              //PP3
+              document.createTextNode(Kk(this, vk, "f").get("Poliest Poly Tracks"))
+              //
             ),
             Kk(this, _k, "f").addEventListener("click", () => {
               Kk(this, wk, "f").playUIClick(),

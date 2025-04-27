@@ -47249,6 +47249,9 @@ document.head.appendChild(style);
               e.playUIClick(), r();
             }),
             W_(this, N_, "f").appendChild(o),
+
+              //
+
             F_(this, B_, document.createElement("button"), "f"),
             (W_(this, B_, "f").className = "button"),
             (W_(this, B_, "f").innerHTML =
@@ -47259,6 +47262,16 @@ document.head.appendChild(style);
             }),
             W_(this, N_, "f").appendChild(W_(this, B_, "f")),
             W_(this, R_, "f").appendChild(W_(this, N_, "f"));
+
+            
+            //PP3
+            const pp3_lb = createButton("leaderboard", 'images/editor.svg', "Leaderboards");
+            pp3_lb.addEventListener("click", () => {
+              leaderboardUI();
+            });
+            pp3_lb.className = "button";
+
+            W_(this, R_, "f").appendChild(pp3_lb);
         }
         dispose() {
           W_(this, R_, "f").removeChild(W_(this, N_, "f")),

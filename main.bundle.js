@@ -225,6 +225,9 @@ aud.style.padding = "0";
 aud.style.top = "0";
 aud.style.right = "0";
 aud.style.flexDirection = "column";
+aud.style.color = "white";
+aud.style.fontSize = "32px";
+aud.style.padding = "10px";
 
 main.appendChild(aud);
 

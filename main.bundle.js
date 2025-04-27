@@ -149,7 +149,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     ld.style.top = "0";
     ld.style.padding = "0";
     ld.style.width = "50%";
-    ld.style.height = "100vh";
+    ld.style.height = "100%";
     ld.style.textAlign = "left";
     ld.style.display = "flex";
     ld.style.flexShrink = "0";

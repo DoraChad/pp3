@@ -218,7 +218,60 @@ lc.appendChild(ls);
 
 const aud = document.createElement("div");
 
+aud.style.display = "flex";
+aud.style.margin = "10px";
+aud.style.position = "absolute";
+aud.style.padding = "0";
+aud.style.top = "0";
+aud.style.right = "0";
+aud.style.flexDirection = "column";
+
+main.appendChild(aud);
+
+aud.appendChild(document.createTextNode("AutoUpdate:"));
+
+const bw = document.createElement("div");
+bw.style.whiteSpace = "nowrap";
+
+aud.appendChild(bw);
+
+const ppb1 = document.createElement("button");
+ppb1.textContent = "On"
+ppb1.style.backgroundColor = "#112052";
+ppb1.style.whiteSpace = "nowrap";
+ppb1.style.height = "48px";
+ppb1.style.padding = "8px 18px";
+ppb1.style.margin = "0";
+ppb1.style.fontSize = "32px";
+ppb1.style.pointerEvents = "auto";
+ppb1.style.color = "white";
+ppb1.style.border = "none";
+ppb1.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
+ppb1.style.cursor = "pointer";
+
+bw.appendChild(ppb1);
+
+const ppb2 = document.createElement("button");
+ppb2.textContent = "Off"
+ppb2.style.backgroundColor = "#334b77";
+ppb2.style.whiteSpace = "nowrap";
+ppb2.style.height = "48px";
+ppb2.style.padding = "8px 18px";
+ppb2.style.margin = "0";
+ppb2.style.fontSize = "32px";
+ppb2.style.pointerEvents = "auto";
+ppb2.style.color = "white";
+ppb2.style.border = "none";
+ppb2.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
+ppb2.style.cursor = "pointer";
+
+bw.appendChild(ppb2);
+
 if (autoUpdate) {
+
+  ppb2.style.backgroundColor = "#112052";
+  ppb1.style.backgroundColor = "#334b77";
+
   fetchLeaderboards()
     .then(players => {
 
@@ -368,6 +421,7 @@ bk.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
 bk.style.color = "white";
 bk.style.fontSize = "32px";
 bk.style.pointerEvents = "auto";
+bk.style.cursor = "pointer";
 
 bk.addEventListener("click", () => {
   removeElement("pp3leaderboard");

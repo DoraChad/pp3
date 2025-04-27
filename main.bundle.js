@@ -167,6 +167,7 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     h2.style.margin = "10px 10px 0 10px";
 
     ld.appendChild(h2);
+    createCountdown(ld);
   
     const h3 = document.createElement("h3");
     h3.textContent = "Poliest Poly 3";
@@ -175,7 +176,6 @@ const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).th
     h3.style.opacity = "0.5";
 
     ld.appendChild(h3);
-    createCountdown(ld);
   
     const ct = document.createElement("div");
     ct.style.className = "container";

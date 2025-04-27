@@ -7,9 +7,7 @@ const trackNames = [
   const leaderboardUrls = [
     //"https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=4d0f964b159d51d6906478bbb87e1edad21b0f1eb2972af947be34f2d8c49ae9&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
     //"https://vps.kodub.com:43273/leaderboard?version=0.5.0&trackId=0544f97453f7b0e2a310dfb0dcd331b4060ae2e9cb14ac27dc5367183dab0513&skip=0&amount=20&onlyVerified=true&userTokenHash=71e806f697d0e6836cb081d13481982c03940b09d2e1a001b2882aa181c1748c",
-    "b16eb75a5b5536ad3eecf4e913078a934272e5398c3629fc03b9c46333f71978",
-    "3418bbba1e2cbfa263dcdca541e695a5403eac6a072ad9fa1cc965bd21faf814",
-    "c60098915d286adcfbc36d563fca0b054f0b1c49f8617e3527ef776b30a6b93f",
+    "72eb14be68b24ec5f7446689378226a5bd4ae5598883a39daf293c2f605dbd79",
     // Add all 25 URLs here...
 ];
   
@@ -19,6 +17,8 @@ const trackNames = [
   
   ////////////////////////////////////////////////////////// FUNCTIONS
   
+  
+let autoUpdate = true;
   
   
   let pp3_l;
@@ -38,601 +38,634 @@ const prefix = "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId="
 const suffix = "&skip=0&amount=500&onlyVerified=false";
 
 
-const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));
-  
-  
-  
-  async function fetchLeaderboards() {
-      try {
-          const responses = await Promise.all(fetchPromises);
-          responses.forEach(data => processLeaderboard(data)); // Process each leaderboard data
-          return players;
-      } catch (error) {
-          console.error('Error fetching data:', error);
-      }
+
+async function fetchLeaderboards() {
+
+  for (const key in players) {
+    delete players[key];
   }
-  
-  
-  function processLeaderboard(data) {
-    data.entries.forEach((entry, index) => {
-        const userId = entry.userId;  // Use userId as the identifier
-        const name = entry.name;
-  
-        if (!players[userId]) {
-            players[userId] = {
-                name: name,  // Store name alongside userId for display
-                leaderboard_count: 0,
-                positions: []
-            };
-        }
-  
-        players[userId].leaderboard_count += 1;
-        players[userId].positions.push(index + 1); // Rank is 1-based
-    });
+
+
+  const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));
+
+
+  try {
+      const responses = await Promise.all(fetchPromises);
+      responses.forEach(data => processLeaderboard(data)); // Process each leaderboard data
+      return players;
+  } catch (error) {
+      console.error('Error fetching data:', error);
   }
-  
-  
-  
-  function createCountdown(parent) {
-    const countdownDiv = document.createElement("div");
-    countdownDiv.className = "countdown";
+}
+
+
+function processLeaderboard(data) {
+data.entries.forEach((entry, index) => {
+    const userId = entry.userId;  // Use userId as the identifier
+    const name = entry.name;
+
+    if (!players[userId]) {
+        players[userId] = {
+            name: name,  // Store name alongside userId for display
+            leaderboard_count: 0,
+            positions: []
+        };
+    }
+
+    players[userId].leaderboard_count += 1;
+    players[userId].positions.push(index + 1); // Rank is 1-based
+});
+}
+
+
+
+function createCountdown(parent) {
+const countdownDiv = document.createElement("div");
+countdownDiv.className = "countdown";
+countdownDiv.style.color = "white";
+countdownDiv.style.fontSize = "40px";
+
+parent.appendChild(countdownDiv);
+
+if (targetDateTime < new Date().getTime()) {
+  countdownDiv.style.color = "red";
+  countdownDiv.textContent = "The Event is Over!";
+  return; 
+};
+
+function updateCountdown() {
+  const now = new Date().getTime();
+
+  if (targetDateTime < now) {
+    countdownDiv.style.color = "red";
+    countdownDiv.textContent = "The Event is Over!";
+    clearInterval(interval);
+    return;
+  } else {
+    pp3_timer = targetDateTime - now;
+  };
+
+  const days = Math.floor(pp3_timer / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((pp3_timer % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((pp3_timer % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((pp3_timer % (1000 * 60)) / 1000);
+
+  countdownDiv.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+  const oneHour = 10 * 60 * 1000;
+  if (pp3_timer < oneHour) {
+    const progress = 1 - pp3_timer / oneHour;
+    const r = 255;
+    const gb = Math.floor(255 * (1 - progress));
+    countdownDiv.style.color = `rgb(${r}, ${gb}, ${gb})`;
+  } else {
     countdownDiv.style.color = "white";
-    countdownDiv.style.fontSize = "40px";
-  
-    parent.appendChild(countdownDiv);
-  
-    if (targetDateTime < new Date().getTime()) {
-      countdownDiv.style.color = "red";
-      countdownDiv.textContent = "The Event is Over!";
-      return; 
-    };
-  
-    function updateCountdown() {
-      const now = new Date().getTime();
-  
-      if (targetDateTime < now) {
-        countdownDiv.style.color = "red";
-        countdownDiv.textContent = "The Event is Over!";
-        clearInterval(interval);
-        return;
-      } else {
-        pp3_timer = targetDateTime - now;
-      };
-  
-      const days = Math.floor(pp3_timer / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((pp3_timer % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((pp3_timer % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((pp3_timer % (1000 * 60)) / 1000);
-  
-      countdownDiv.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  
-      const oneHour = 10 * 60 * 1000;
-      if (pp3_timer < oneHour) {
-        const progress = 1 - pp3_timer / oneHour;
-        const r = 255;
-        const gb = Math.floor(255 * (1 - progress));
-        countdownDiv.style.color = `rgb(${r}, ${gb}, ${gb})`;
-      } else {
-        countdownDiv.style.color = "white";
-      }
-    }
-  
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    
-  };
-  
-  
-  const leaderboardUI = function() {
-    for (const key in players) {
-      delete players[key];
-    }
-  
-    const main = document.getElementsByClassName("menu")[0];
-  
-    const md = document.createElement("div");
-    md.style.display = "flex";
-    md.style.justifyContent = "center";
-    md.style.alignItems = "center";
-    md.style.height = "100%";
-    md.style.width = "100%";
-    md.style.position = "absolute";
-    md.style.top = "0";
-    md.style.padding = "0";
-    md.style.margin = "0";
-    md.style.zIndex = "2";
-    md.className = "pp3leaderboard"
-
-    main.appendChild(md);
-  
-    const ld = document.createElement("div");
-    ld.className = "background";
-    ld.style.margin = "0";
-    ld.style.top = "0";
-    ld.style.padding = "0";
-    ld.style.width = "50%";
-    ld.style.height = "100%";
-    ld.style.textAlign = "left";
-    ld.style.display = "flex";
-    ld.style.flexShrink = "0";
-    ld.style.flexDirection = "column";
-    ld.style.backgroundColor = "#28346a";
-    ld.style.textAlign = "center";
-    ld.style.fontWeight = "normal";
-    ld.style.color = "white";
-
-    md.appendChild(ld);
-  
-    const h2 = document.createElement("h2");
-    h2.textContent = "Event Leaderboard";
-    h2.style.fontSize = "48px";
-    h2.style.margin = "10px 10px 0 10px";
-
-    ld.appendChild(h2);
-    createCountdown(ld);
-  
-    const h3 = document.createElement("h3");
-    h3.textContent = "Poliest Poly 3";
-    h3.style.fontSize = "22px";
-    h3.style.margin = "0 10px 10px 10px";
-    h3.style.opacity = "0.5";
-
-    ld.appendChild(h3);
-  
-    const ct = document.createElement("div");
-    ct.style.className = "container";
-    ct.style.flexGrow = "1";
-    ct.style.margin = "0";
-    ct.style.padding = "0";
-    ct.style.backgroundColor = "#212b58";
-    ct.style.overflowX = "hidden";
-    ct.style.overflowY = "auto";
-    ct.style.pointerEvents = "auto";
-    //ct.style.width = "100%";
-    //ct.style.height = "100%";
-
-    ld.appendChild(ct);
-  
-    fetchLeaderboards()
-      .then(players => {
-  
-              
-  
-        const playerListArray = Object.entries(players).map(([userId, data]) => {
-            const avgPlacement = data.positions.reduce((a, b) => a + b, 0) / data.positions.length;
-            return {
-                userId, // include the userId in the object
-                name: data.name,
-                leaderboard_count: data.leaderboard_count,
-                positions: data.positions,
-                avgPlacement
-            };
-        });
-        
-        playerListArray.sort((a, b) => {
-            if (b.leaderboard_count !== a.leaderboard_count) {
-                return b.leaderboard_count - a.leaderboard_count;
-            }
-            return a.avgPlacement - b.avgPlacement;
-        });
-        
-  
-  
-  
-        playerListArray.forEach((player, index) => {
-          const lbc = document.createElement("div");
-          lbc.className = "playerSpot";
-          lbc.style.margin = "10px 10px 0 10px";
-          lbc.style.padding = "0";
-          lbc.style.verticalAlign = "top";
-          lbc.style.clipPath = "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
-          lbc.style.textAlign = "left";
-          lbc.style.whiteSpace = "nowrap";
-          lbc.style.height = "100px";
-          lbc.style.width = "calc(100% - 10px * 2)";
-          lbc.style.backgroundColor = "#112052";
-          lbc.style.color = "white";
-          lbc.style.display = "flex";
-          lbc.style.alignItems = "center";
-          lbc.id = player.userId;
-        
-          //hh3.textContent = `${index + 1}. ${player.name} — ${player.leaderboard_count} track${player.leaderboard_count !== 1 ? 's' : ''}, avg place: ${player.avgPlacement.toFixed(2)}`;
-  
-          const lft = document.createElement("div");
-          lft.className = "left";
-          lft.style.display = "flex";
-          lft.style.flexDirection = "column";
-          lft.style.justifyContent = "flex-end";
-  
-          const mdl = document.createElement("div");
-          mdl.style.display = "inline-block";
-          mdl.style.verticalAlign = "top";
-          mdl.className = "middle";
-          mdl.style.flex = "1 1 auto";
-          mdl.style.textOverflow = "ellipsis";
-          mdl.style.whiteSpace = "nowrap";
-          mdl.style.overflow = "hidden";
-  
-          const rgh = document.createElement("div");
-          rgh.style.display = "inline-block";
-          rgh.style.verticalAlign = "top";
-          rgh.className = "right";
-          rgh.style.display = "flex";
-          rgh.style.flexDirection = "column";
-          rgh.style.right = "0";
-          rgh.style.marginLeft = "auto";
-          rgh.style.padding = "5%";
-  
-          const hh3 = document.createElement("p");
-          
-          hh3.textContent = `${index + 1}.`;
-          hh3.style.padding = "15px";
-          hh3.style.fontSize = "32px";
-  
-          const hh4 = document.createElement("p");
-          
-          hh4.style.padding = "10px";
-          hh4.style.fontSize = "25px";
-          hh4.style.margin = "0";
-          hh4.textContent = `Completed: ${player.leaderboard_count}`
-  
-          const hh5 = document.createElement("p");
-          
-          hh5.style.padding = "10px";
-          hh5.style.fontSize = "25px";
-          hh5.style.margin = "0";
-          hh5.textContent = `Avg. Place: ${player.avgPlacement.toFixed(2)}`
-  
-          const hh6 = document.createElement("p");
-          
-          hh6.textContent = player.name;
-          hh6.style.padding = "15px";
-          hh6.style.fontSize = "50px";
-        
-          lft.appendChild(hh3);
-          rgh.appendChild(hh4);
-          rgh.appendChild(hh5);
-          mdl.appendChild(hh6);
-          lbc.appendChild(lft);
-          lbc.appendChild(mdl);
-          lbc.appendChild(rgh);
-          ct.appendChild(lbc);
-
-          const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
-          if (clientElement) {
-              const topPos = clientElement.offsetTop;
-              ct.scrollTop = topPos;
-              clientElement.style.backgroundColor = "#2e4182";
-          };
-        });
-      });
-  
-  
-    const st = document.createElement("div");
-    st.className = "bottom";
-    st.style.bottom = "0";
-    st.style.textAlign = "left";
-    st.style.position = "flex";
-
-    ld.appendChild(st);
-
-    const pq = document.createElement("img");
-    pq.src = "images/back.svg";
-    pq.style.margin = "-6px -4px 0 -4px";
-    pq.style.width = "32px";
-    pq.style.height = "32px";
-    pq.style.verticalAlign = "middle";
-    
-    const bk = document.createElement("button");
-    bk.className = "pp3back-button";
-    bk.style.position = "relative";
-    bk.style.margin = "10px";
-    bk.style.padding = "12px 18px";
-    bk.style.backgroundColor = "#112052";
-    bk.style.border = "none";
-    bk.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
-    bk.style.color = "white";
-    bk.style.fontSize = "32px";
-    bk.style.pointerEvents = "auto";
-  
-    bk.addEventListener("click", () => {
-      removeElement("pp3leaderboard");
-      pp3_l.show();
-    });
-
-    bk.appendChild(pq);
-    bk.appendChild(document.createTextNode("Back"));
-    st.appendChild(bk);
-  
-    const bks = document.createElement("style");
-    bks.textContent = `
-      .pp3back-button::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        border-bottom: 2px solid white;
-        height: 100%;
-        background-color: #334b77;
-        transition: width 0.1s ease-in-out;
-        z-index: -1;
-      }
-      .pp3back-button:not(:disabled):hover::after {
-          width: 100%;
-      }
-      `;
-  
-    document.head.appendChild(bks);
-  
-
-  
-
-  };
-  
-  
-  
-  
-  
-  //POLYUI
-  
-  const removeElement = function(className){
-    const elements = document.getElementsByClassName(className);
-    while(elements.length > 0){
-        elements[0].parentNode.removeChild(elements[0]);
-    }
   }
-  
-  const hideElement = function(className) {
-    const elements = document.getElementsByClassName(className);
-    for (let el of elements) {
-        el.classList.add("hidden");
-    }
-  };
-  
-  
-  const createButton = function(class_name, image_src, text) {
-    const button = document.createElement("button");
-    button.className = class_name;
-    button.innerHTML = `<img class="button-icon" src=${image_src}>`;
-    button.append(document.createTextNode(text));
-    return button;
-  };
-  
-  
-  const cssTemplate = function(class_name, template_type, options = {}) {
-    const defaultConfigs = {
-        menu_button: {
-            base: {
-                display: "inline-block",
-                "text-align": "center",
-                margin: "10px 0",
-                width: "200px",
-                height: "200px",
-                "pointer-events": "auto",
-                "background-color": "#112052",
-                border: "none",
-                position: "relative",
-                "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
-                color: "white",
-                "font-size": "27px",
-            },
-            nested: {
-                img: {
-                    margin: "40px 40px 0 40px",
-                    width: "96px",
-                    height: "96px",
-                    transition: "transform 0.2s ease-in-out",
-                },
-            },
-            hover: {
-                "__CLASS__:not(:disabled):hover > img": {
-                    transform: "translateY(-10px)",
-                },
-                "__CLASS__::after": {
-                    content: '""',
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    width: "0",
-                    "border-bottom": "2px solid white",
-                    height: "100%",
-                    "background-color": "#334b77",
-                    transition: "width 0.1s ease-in-out",
-                    "z-index": "-1",
-                },
-                "__CLASS__:not(:disabled):hover::after": {
-                    width: "100%",
-                },
+}
+
+updateCountdown();
+const interval = setInterval(updateCountdown, 1000);
+
+};
+
+
+const leaderboardUI = function() {
+
+const main = document.getElementsByClassName("menu")[0];
+
+const md = document.createElement("div");
+md.style.display = "flex";
+md.style.justifyContent = "center";
+md.style.alignItems = "center";
+md.style.height = "100%";
+md.style.width = "100%";
+md.style.position = "absolute";
+md.style.top = "0";
+md.style.padding = "0";
+md.style.margin = "0";
+md.style.zIndex = "2";
+md.className = "pp3leaderboard"
+
+main.appendChild(md);
+
+const ld = document.createElement("div");
+ld.className = "background";
+ld.style.margin = "0";
+ld.style.top = "0";
+ld.style.padding = "0";
+ld.style.width = "50%";
+ld.style.height = "100%";
+ld.style.textAlign = "left";
+ld.style.display = "flex";
+ld.style.flexShrink = "0";
+ld.style.flexDirection = "column";
+ld.style.backgroundColor = "#28346a";
+ld.style.textAlign = "center";
+ld.style.fontWeight = "normal";
+ld.style.color = "white";
+
+md.appendChild(ld);
+
+const h2 = document.createElement("h2");
+h2.textContent = "Event Leaderboard";
+h2.style.fontSize = "48px";
+h2.style.margin = "10px 10px 0 10px";
+
+ld.appendChild(h2);
+createCountdown(ld);
+
+const h3 = document.createElement("h3");
+h3.textContent = "Poliest Poly 3";
+h3.style.fontSize = "22px";
+h3.style.margin = "0 10px 10px 10px";
+h3.style.opacity = "0.5";
+
+ld.appendChild(h3);
+
+const ct = document.createElement("div");
+ct.style.className = "container";
+ct.style.flexGrow = "1";
+ct.style.margin = "0";
+ct.style.padding = "0";
+ct.style.backgroundColor = "#212b58";
+ct.style.overflowX = "hidden";
+ct.style.overflowY = "auto";
+ct.style.pointerEvents = "auto";
+//ct.style.width = "100%";
+//ct.style.height = "100%";
+
+ld.appendChild(ct);
+
+const lc = document.createElement("div");
+lc.style.display = "flex";
+lc.style.justifyContent = "center";
+lc.style.alignItems = "center";
+lc.style.width = "100%";
+lc.style.height = "100%";
+
+ct.appendChild(lc);
+
+const ls = document.createElement("div");
+ls.style.transform = "rotate(196.59deg)";
+ls.style.width = "60px";
+ls.style.height = "60px";
+ls.style.borderRadius = "50%"
+ls.style.border = "5px solid #192042";
+ls.style.borderLeftColor = "white";
+ls.style.animation = "1s linear infinite forwards loading-spinner-spin";
+
+lc.appendChild(ls);
+
+const aud = document.createElement("div");
+
+if (autoUpdate) {
+  fetchLeaderboards()
+    .then(players => {
+
+            
+
+      const playerListArray = Object.entries(players).map(([userId, data]) => {
+          const avgPlacement = data.positions.reduce((a, b) => a + b, 0) / data.positions.length;
+          return {
+              userId, // include the userId in the object
+              name: data.name,
+              leaderboard_count: data.leaderboard_count,
+              positions: data.positions,
+              avgPlacement
+          };
+      });
+      
+      playerListArray.sort((a, b) => {
+          if (b.leaderboard_count !== a.leaderboard_count) {
+              return b.leaderboard_count - a.leaderboard_count;
+          }
+          return a.avgPlacement - b.avgPlacement;
+      });
+
+
+
+      ct.removeChild(lc);     
+
+
+
+      playerListArray.forEach((player, index) => {
+        const lbc = document.createElement("div");
+        lbc.className = "playerSpot";
+        lbc.style.margin = "10px 10px 0 10px";
+        lbc.style.padding = "0";
+        lbc.style.verticalAlign = "top";
+        lbc.style.clipPath = "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
+        lbc.style.textAlign = "left";
+        lbc.style.whiteSpace = "nowrap";
+        lbc.style.height = "100px";
+        lbc.style.width = "calc(100% - 10px * 2)";
+        lbc.style.backgroundColor = "#112052";
+        lbc.style.color = "white";
+        lbc.style.display = "flex";
+        lbc.style.alignItems = "center";
+        lbc.id = player.userId;
+      
+        //hh3.textContent = `${index + 1}. ${player.name} — ${player.leaderboard_count} track${player.leaderboard_count !== 1 ? 's' : ''}, avg place: ${player.avgPlacement.toFixed(2)}`;
+
+        const lft = document.createElement("div");
+        lft.className = "left";
+        lft.style.display = "flex";
+        lft.style.flexDirection = "column";
+        lft.style.justifyContent = "flex-end";
+
+        const mdl = document.createElement("div");
+        mdl.style.display = "inline-block";
+        mdl.style.verticalAlign = "top";
+        mdl.className = "middle";
+        mdl.style.flex = "1 1 auto";
+        mdl.style.textOverflow = "ellipsis";
+        mdl.style.whiteSpace = "nowrap";
+        mdl.style.overflow = "hidden";
+
+        const rgh = document.createElement("div");
+        rgh.style.display = "inline-block";
+        rgh.style.verticalAlign = "top";
+        rgh.className = "right";
+        rgh.style.display = "flex";
+        rgh.style.flexDirection = "column";
+        rgh.style.right = "0";
+        rgh.style.marginLeft = "auto";
+        rgh.style.padding = "5%";
+
+        const hh3 = document.createElement("p");
+        
+        hh3.textContent = `${index + 1}.`;
+        hh3.style.padding = "15px";
+        hh3.style.fontSize = "32px";
+
+        const hh4 = document.createElement("p");
+        
+        hh4.style.padding = "10px";
+        hh4.style.fontSize = "25px";
+        hh4.style.margin = "0";
+        hh4.textContent = `Completed: ${player.leaderboard_count}`
+
+        const hh5 = document.createElement("p");
+        
+        hh5.style.padding = "10px";
+        hh5.style.fontSize = "25px";
+        hh5.style.margin = "0";
+        hh5.textContent = `Avg. Place: ${player.avgPlacement.toFixed(2)}`
+
+        const hh6 = document.createElement("p");
+        
+        hh6.textContent = player.name;
+        hh6.style.padding = "15px";
+        hh6.style.fontSize = "50px";
+      
+        lft.appendChild(hh3);
+        rgh.appendChild(hh4);
+        rgh.appendChild(hh5);
+        mdl.appendChild(hh6);
+        lbc.appendChild(lft);
+        lbc.appendChild(mdl);
+        lbc.appendChild(rgh);
+        ct.appendChild(lbc);
+
+        const clientElement = document.getElementById(pp3_user.getCurrentUserProfile().tokenHash);
+        if (clientElement) {
+          const clientRect = clientElement.getBoundingClientRect();
+          const containerRect = ct.getBoundingClientRect();
+          
+          const offset = clientRect.top - containerRect.top + ct.scrollTop;
+      
+          ct.scrollTop = offset;
+          clientElement.style.backgroundColor = "#2e4182";
+        };
+      });
+    });
+};
+
+
+const st = document.createElement("div");
+st.className = "bottom";
+st.style.bottom = "0";
+st.style.textAlign = "left";
+st.style.position = "flex";
+
+ld.appendChild(st);
+
+const pq = document.createElement("img");
+pq.src = "images/back.svg";
+pq.style.margin = "-6px -4px 0 -4px";
+pq.style.width = "32px";
+pq.style.height = "32px";
+pq.style.verticalAlign = "middle";
+
+const bk = document.createElement("button");
+bk.className = "pp3back-button";
+bk.style.position = "relative";
+bk.style.margin = "10px";
+bk.style.padding = "12px 18px";
+bk.style.backgroundColor = "#112052";
+bk.style.border = "none";
+bk.style.clipPath = "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)";
+bk.style.color = "white";
+bk.style.fontSize = "32px";
+bk.style.pointerEvents = "auto";
+
+bk.addEventListener("click", () => {
+  removeElement("pp3leaderboard");
+  pp3_l.show();
+});
+
+bk.appendChild(pq);
+bk.appendChild(document.createTextNode("Back"));
+st.appendChild(bk);
+
+const bks = document.createElement("style");
+bks.textContent = `
+  .pp3back-button::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    border-bottom: 2px solid white;
+    height: 100%;
+    background-color: #334b77;
+    transition: width 0.1s ease-in-out;
+    z-index: -1;
+  }
+  .pp3back-button:not(:disabled):hover::after {
+      width: 100%;
+  }
+  `;
+
+document.head.appendChild(bks);
+
+
+
+
+};
+
+
+
+
+
+//POLYUI
+
+const removeElement = function(className){
+const elements = document.getElementsByClassName(className);
+while(elements.length > 0){
+    elements[0].parentNode.removeChild(elements[0]);
+}
+}
+
+const hideElement = function(className) {
+const elements = document.getElementsByClassName(className);
+for (let el of elements) {
+    el.classList.add("hidden");
+}
+};
+
+
+const createButton = function(class_name, image_src, text) {
+const button = document.createElement("button");
+button.className = class_name;
+button.innerHTML = `<img class="button-icon" src=${image_src}>`;
+button.append(document.createTextNode(text));
+return button;
+};
+
+
+const cssTemplate = function(class_name, template_type, options = {}) {
+const defaultConfigs = {
+    menu_button: {
+        base: {
+            display: "inline-block",
+            "text-align": "center",
+            margin: "10px 0",
+            width: "200px",
+            height: "200px",
+            "pointer-events": "auto",
+            "background-color": "#112052",
+            border: "none",
+            position: "relative",
+            "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
+            color: "white",
+            "font-size": "27px",
+        },
+        nested: {
+            img: {
+                margin: "40px 40px 0 40px",
+                width: "96px",
+                height: "96px",
+                transition: "transform 0.2s ease-in-out",
             },
         },
-        menu_button_small: {
-            base: {
-                padding: "6px 12px",
-                margin: "0",
-                "pointer-events": "auto",
-                "background-color": "#112052",
-                border: "none",
-                position: "relative",
-                "clip-path": "polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%)",
-                color: "white",
-                "font-size": "22px",
+        hover: {
+            "__CLASS__:not(:disabled):hover > img": {
+                transform: "translateY(-10px)",
             },
-            nested: {
-                img: {
-                    "vertical-align": "middle",
-                    width: "24px",
-                    height: "24px",
-                },
+            "__CLASS__::after": {
+                content: '""',
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                width: "0",
+                "border-bottom": "2px solid white",
+                height: "100%",
+                "background-color": "#334b77",
+                transition: "width 0.1s ease-in-out",
+                "z-index": "-1",
             },
-            hover: {
-                "__CLASS__::after": {
-                    content: '""',
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    width: "0",
-                    "border-bottom": "2px solid white",
-                    height: "100%",
-                    "background-color": "#334b77",
-                    transition: "width 0.1s ease-in-out",
-                    "z-index": "-1",
-                },
-                "__CLASS__:not(:disabled):hover::after": {
-                    width: "100%",
-                },
-            },
-        },
-        top_button: {
-          base: {
-              padding: "8px 18px",
-              margin: "8px 12px",
-              "pointer-events": "auto",
-              "background-color": "#112052",
-              border: "none",
-              position: "relative",
-              "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
-              color: "white",
-              "font-size": "32px",
-          },
-          nested: {
-              img: {
-                  margin: "-6px -4px 0 -4px",
-                  "vertical-align": "middle",
-                  width: "32px",
-                  height: "32px",
-              },
-          },
-          hover: {
-              "__CLASS__::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: "0",
-                  left: "0",
-                  width: "0",
-                  "border-bottom": "2px solid white",
-                  height: "100%",
-                  "background-color": "#334b77",
-                  transition: "width 0.1s ease-in-out",
-                  "z-index": "-1",
-              },
-              "__CLASS__:not(:disabled):hover::after": {
-                  width: "100%",
-              },
-          },
-        },
-        nickname_input: {
-            base: {
-                display: "block",
-                margin: "0",
-                padding: "0.25em",
-                "box-sizing": "border-box",
+            "__CLASS__:not(:disabled):hover::after": {
                 width: "100%",
-                color: "white",
-                "font-size": "36px",
-                "font-weight": "normal",
-                "clip-path": "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
-                border: "none",
-                "background-color": "#192042",
             },
         },
-        search_input: {
-            base: {
-                margin: "8px -10px",
-                padding: "0 20px",
-                "text-indent": "2px",
+    },
+    menu_button_small: {
+        base: {
+            padding: "6px 12px",
+            margin: "0",
+            "pointer-events": "auto",
+            "background-color": "#112052",
+            border: "none",
+            position: "relative",
+            "clip-path": "polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%)",
+            color: "white",
+            "font-size": "22px",
+        },
+        nested: {
+            img: {
+                "vertical-align": "middle",
+                width: "24px",
+                height: "24px",
+            },
+        },
+        hover: {
+            "__CLASS__::after": {
+                content: '""',
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                width: "0",
+                "border-bottom": "2px solid white",
+                height: "100%",
+                "background-color": "#334b77",
+                transition: "width 0.1s ease-in-out",
+                "z-index": "-1",
+            },
+            "__CLASS__:not(:disabled):hover::after": {
                 width: "100%",
-                color: "white",
-                "font-size": "24px",
-                "font-weight": "bold",
-                "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
-                border: "none",
-                "background-color": "#192042",
-                "flex-grow": "1",
             },
         },
-        import_input: {
-            base: {
-                margin: "10px 0 0 0",
-                padding: "10px",
-                "box-sizing": "border-box",
-                width: "100%",
-                height: "calc(100% - 52px - 10px)",
-                color: "white",
-                "font-size": "20px",
-                "font-weight": "normal",
-                border: "none",
-                "background-color": "#192042",
-                "word-break": "break-all",
-            },
+    },
+    top_button: {
+      base: {
+          padding: "8px 18px",
+          margin: "8px 12px",
+          "pointer-events": "auto",
+          "background-color": "#112052",
+          border: "none",
+          position: "relative",
+          "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
+          color: "white",
+          "font-size": "32px",
+      },
+      nested: {
+          img: {
+              margin: "-6px -4px 0 -4px",
+              "vertical-align": "middle",
+              width: "32px",
+              height: "32px",
+          },
+      },
+      hover: {
+          "__CLASS__::after": {
+              content: '""',
+              position: "absolute",
+              bottom: "0",
+              left: "0",
+              width: "0",
+              "border-bottom": "2px solid white",
+              height: "100%",
+              "background-color": "#334b77",
+              transition: "width 0.1s ease-in-out",
+              "z-index": "-1",
+          },
+          "__CLASS__:not(:disabled):hover::after": {
+              width: "100%",
+          },
+      },
+    },
+    nickname_input: {
+        base: {
+            display: "block",
+            margin: "0",
+            padding: "0.25em",
+            "box-sizing": "border-box",
+            width: "100%",
+            color: "white",
+            "font-size": "36px",
+            "font-weight": "normal",
+            "clip-path": "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
+            border: "none",
+            "background-color": "#192042",
         },
-    };
-  
-    const config = defaultConfigs[template_type];
-    if (!config) throw new Error(`Unknown template: ${template_type}`);
-    
-    const hasExplicitSections = "base" in options || "nested" in options || "hover" in options;
-  
-  
-    const userBase = hasExplicitSections ? options.base || {} : options;
-    const userNested = hasExplicitSections ? options.nested || {} : {};
-    const userHover = hasExplicitSections ? options.hover || {} : {};
-    
-    const mergedBase = { ...config.base, ...userBase };
-    const mergedNested = { ...config.nested, ...userNested };
-    const mergedHover = { ...config.hover, ...userHover };
-  
-     const toCSS = (selector, styles) =>
-    `${selector} {\n${Object.entries(styles)
-      .map(([key, value]) => {
-        const kebab = key.includes("-")
-          ? key
-          : key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
-        return `  ${kebab}: ${value};`;
-      })
-      .join("\n")}\n}`;
-  
-    // Helper function to resolve dynamic class name in hover selectors
-    const resolveSelectors = (selectorsObj, className) => {
-      const resolved = {};
-      for (const [selector, styles] of Object.entries(selectorsObj)) {
-        const newSelector = selector.replace(/__CLASS__/g, `.${className}`);
-        resolved[newSelector] = styles;
-      }
-      return resolved;
-    };
-  
-    // Apply class name to hover selectors
-    const resolvedHover = resolveSelectors(mergedHover, class_name);
-  
-    // Generate CSS for base, nested, and hover sections
-    const cssChunks = [toCSS(`.${class_name}`, mergedBase)];
-  
-    for (const [subSelector, styles] of Object.entries(mergedNested)) {
-        cssChunks.push(toCSS(`.${class_name} ${subSelector}`, styles));
+    },
+    search_input: {
+        base: {
+            margin: "8px -10px",
+            padding: "0 20px",
+            "text-indent": "2px",
+            width: "100%",
+            color: "white",
+            "font-size": "24px",
+            "font-weight": "bold",
+            "clip-path": "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)",
+            border: "none",
+            "background-color": "#192042",
+            "flex-grow": "1",
+        },
+    },
+    import_input: {
+        base: {
+            margin: "10px 0 0 0",
+            padding: "10px",
+            "box-sizing": "border-box",
+            width: "100%",
+            height: "calc(100% - 52px - 10px)",
+            color: "white",
+            "font-size": "20px",
+            "font-weight": "normal",
+            border: "none",
+            "background-color": "#192042",
+            "word-break": "break-all",
+        },
+    },
+};
+
+const config = defaultConfigs[template_type];
+if (!config) throw new Error(`Unknown template: ${template_type}`);
+
+const hasExplicitSections = "base" in options || "nested" in options || "hover" in options;
+
+
+const userBase = hasExplicitSections ? options.base || {} : options;
+const userNested = hasExplicitSections ? options.nested || {} : {};
+const userHover = hasExplicitSections ? options.hover || {} : {};
+
+const mergedBase = { ...config.base, ...userBase };
+const mergedNested = { ...config.nested, ...userNested };
+const mergedHover = { ...config.hover, ...userHover };
+
+ const toCSS = (selector, styles) =>
+`${selector} {\n${Object.entries(styles)
+  .map(([key, value]) => {
+    const kebab = key.includes("-")
+      ? key
+      : key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+    return `  ${kebab}: ${value};`;
+  })
+  .join("\n")}\n}`;
+
+// Helper function to resolve dynamic class name in hover selectors
+const resolveSelectors = (selectorsObj, className) => {
+  const resolved = {};
+  for (const [selector, styles] of Object.entries(selectorsObj)) {
+    const newSelector = selector.replace(/__CLASS__/g, `.${className}`);
+    resolved[newSelector] = styles;
+  }
+  return resolved;
+};
+
+// Apply class name to hover selectors
+const resolvedHover = resolveSelectors(mergedHover, class_name);
+
+// Generate CSS for base, nested, and hover sections
+const cssChunks = [toCSS(`.${class_name}`, mergedBase)];
+
+for (const [subSelector, styles] of Object.entries(mergedNested)) {
+    cssChunks.push(toCSS(`.${class_name} ${subSelector}`, styles));
+}
+
+for (const [selector, styles] of Object.entries(resolvedHover)) {
+    if (selector.startsWith("@media")) {
+      const mediaContent = Object.entries(styles)
+        .map(([innerSel, innerStyles]) => toCSS(innerSel, innerStyles))
+        .join("\n\n");
+      cssChunks.push(`${selector} {\n${mediaContent.replace(/^/gm, "  ")}\n}`);
+    } else {
+      cssChunks.push(toCSS(selector, styles));
     }
-  
-    for (const [selector, styles] of Object.entries(resolvedHover)) {
-        if (selector.startsWith("@media")) {
-          const mediaContent = Object.entries(styles)
-            .map(([innerSel, innerStyles]) => toCSS(innerSel, innerStyles))
-            .join("\n\n");
-          cssChunks.push(`${selector} {\n${mediaContent.replace(/^/gm, "  ")}\n}`);
-        } else {
-          cssChunks.push(toCSS(selector, styles));
-        }
-    }
-  
-    
-    return cssChunks.join("\n\n");
-  };
-  
-  const insertCSS = function(cssText) {
-    const style = document.createElement("style");
-    style.textContent = cssText;
-    document.head.appendChild(style);
-  };
-  
+}
+
+
+return cssChunks.join("\n\n");
+};
+
+const insertCSS = function(cssText) {
+const style = document.createElement("style");
+style.textContent = cssText;
+document.head.appendChild(style);
+};
 
 
 

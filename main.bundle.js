@@ -41,21 +41,27 @@ const suffix = "&skip=0&amount=500&onlyVerified=false";
 
 async function fetchLeaderboards() {
 
-  for (const key in players) {
-    delete players[key];
-  }
+  if (autoUpdate) {
+
+    ppb2.style.backgroundColor = "#112052";
+    ppb1.style.backgroundColor = "#334b77";
+
+    for (const key in players) {
+      delete players[key];
+    }
 
 
-  const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));
+    const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));
 
 
-  try {
-      const responses = await Promise.all(fetchPromises);
-      responses.forEach(data => processLeaderboard(data)); // Process each leaderboard data
-      return players;
-  } catch (error) {
-      console.error('Error fetching data:', error);
-  }
+    try {
+        const responses = await Promise.all(fetchPromises);
+        responses.forEach(data => processLeaderboard(data)); // Process each leaderboard data
+        return players;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
 }
 
 
@@ -289,10 +295,7 @@ ppb2.addEventListener("click", () => {
 
 bw.appendChild(ppb2);
 
-if (autoUpdate) {
 
-  ppb2.style.backgroundColor = "#112052";
-  ppb1.style.backgroundColor = "#334b77";
 
   fetchLeaderboards()
     .then(players => {
@@ -414,7 +417,6 @@ if (autoUpdate) {
         };
       });
     });
-};
 
 
 const st = document.createElement("div");

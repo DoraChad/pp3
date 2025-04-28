@@ -137,7 +137,7 @@ const interval = setInterval(updateCountdown, 1000);
 
 const leaderboardUI = function() {
 
-const main = document.getElementsByClassName("menu")[0];
+const main = document.getElementsByClassName("ui")[0];
 
 const md = document.createElement("div");
 md.style.display = "flex";
@@ -47265,11 +47265,19 @@ document.head.appendChild(style);
 
             
             //PP3
-            const pp3_lb = createButton("leaderboard", 'images/editor.svg', "Leaderboards");
+            const pp3_lb = document.createElement("button");
+            pp3_lb.className = class_name;
+            pp3_lb.innerHTML = `<img class="button-icon" src=${image_src}>`;
+            pp3_lb.append(document.createTextNode(text));
+
+            const pp3im = button.querySelector(".button-icon")
+            img.style.padding = "0 10px 0 0";
+
             pp3_lb.addEventListener("click", () => {
               leaderboardUI();
             });
             pp3_lb.className = "button";
+            pp3_lb.style.padding = "0 10px 0 0";
 
             W_(this, N_, "f").appendChild(pp3_lb);
             //

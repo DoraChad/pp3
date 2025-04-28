@@ -137,7 +137,7 @@ const interval = setInterval(updateCountdown, 1000);
 
 const leaderboardUI = function() {
 
-const main = document.getElementsById("ui")[0];
+const main = document.getElementById("ui")[0];
 
 const md = document.createElement("div");
 md.style.display = "flex";

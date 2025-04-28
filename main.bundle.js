@@ -14,6 +14,7 @@ const trackNames = [
   //Event ending time in GMT (5/10/25, 1PM PST)
   const targetDateTime = new Date("2025-05-10T20:00:00Z").getTime();
   
+const leaderboardImagePath = "images/editor.svg";
   
   ////////////////////////////////////////////////////////// FUNCTIONS
   
@@ -42650,7 +42651,7 @@ document.head.appendChild(style);
           const w = document.createElement("img");
           (w.src = "images/search.svg"), v.appendChild(w);
           //PP3
-          const pp3_menu = createButton("leaderboard", 'images/editor.svg', "Leaderboards");
+          const pp3_menu = createButton("leaderboard", leaderboardImagePath, "Leaderboards");
           pp3_menu.addEventListener("click", () => {
             this.hide();
             leaderboardUI();
@@ -47266,9 +47267,8 @@ document.head.appendChild(style);
             
             //PP3
             const pp3_lb = document.createElement("button");
-            pp3_lb.className = class_name;
-            pp3_lb.innerHTML = `<img class="button-icon" src=${image_src}>`;
-            pp3_lb.append(document.createTextNode(text));
+            pp3_lb.innerHTML = `<img class="button-icon" src=${leaderboardImagePath}>`;
+            pp3_lb.append(document.createTextNode("Leaderboards"));
 
             const pp3im = button.querySelector(".button-icon")
             img.style.padding = "0 10px 0 0";
@@ -47277,7 +47277,6 @@ document.head.appendChild(style);
               leaderboardUI();
             });
             pp3_lb.className = "button";
-            pp3_lb.style.padding = "0 10px 0 0";
 
             W_(this, N_, "f").appendChild(pp3_lb);
             //

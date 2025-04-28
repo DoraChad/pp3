@@ -47270,7 +47270,7 @@ document.head.appendChild(style);
             pp3_lb.innerHTML = `<img class="button-icon" src=${leaderboardImagePath}>`;
             pp3_lb.append(document.createTextNode("Leaderboards"));
 
-            const pp3im = button.querySelector(".button-icon")
+            const pp3im = pp3_lb.querySelector(".button-icon")
             img.style.padding = "0 10px 0 0";
 
             pp3_lb.addEventListener("click", () => {

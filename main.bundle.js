@@ -42658,6 +42658,9 @@ document.head.appendChild(style);
           });
           pp3_menu.className = "button";
 
+          const pp3im2 = pp3_menu.querySelector(".button-icon")
+          pp3im2.style.marginRight = "5px";
+
           d.appendChild(pp3_menu);
           //
           const y = document.createElement("button");
@@ -47272,7 +47275,6 @@ document.head.appendChild(style);
 
             const pp3im = pp3_lb.querySelector(".button-icon")
             pp3im.style.padding = "0 10px 0 0";
-            pp3im.style.marginRight = "5px";
 
             pp3_lb.addEventListener("click", () => {
               leaderboardUI();

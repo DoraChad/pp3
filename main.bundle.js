@@ -14,7 +14,7 @@ const trackNames = [
   //Event ending time in GMT (5/10/25, 1PM PST)
   const targetDateTime = new Date("2025-05-10T20:00:00Z").getTime();
   
-const leaderboardImagePath = "images/editor.svg";
+const leaderboardImagePath = "images/leaderboards.svg";
   
   ////////////////////////////////////////////////////////// FUNCTIONS
   

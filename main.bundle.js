@@ -47272,6 +47272,7 @@ document.head.appendChild(style);
 
             const pp3im = pp3_lb.querySelector(".button-icon")
             pp3im.style.padding = "0 10px 0 0";
+            pp3im.style.marginRight = "5px";
 
             pp3_lb.addEventListener("click", () => {
               leaderboardUI();

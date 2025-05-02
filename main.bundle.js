@@ -1,5 +1,9 @@
 const trackNames = [
-    "90_reset",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
     //Add all track names (in files) here
   ];
   

@@ -84,33 +84,45 @@ let autoUpdate = true;
 const prefix = "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=";
 const suffix = "&skip=0&amount=500&onlyVerified=false";
 
-
+async function retryFetch(url, retries = 3, delay = 1000) {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+      return await response.json();
+    } catch (err) {
+      if (attempt < retries - 1) {
+        await new Promise(res => setTimeout(res, delay));
+      } else {
+        throw new Error(`Failed to fetch ${url} after ${retries} attempts: ${err.message}`);
+      }
+    }
+  }
+}
 
 async function fetchLeaderboards() {
-
   if (autoUpdate) {
-
-
     for (const key in players) {
       delete players[key];
     }
 
-
-    const fetchPromises = leaderboardUrls.map(url => fetch(prefix + url + suffix).then(response => response.json()));
-
+    const fetchPromises = leaderboardUrls.map(url =>
+      retryFetch(prefix + url + suffix)
+    );
 
     try {
-        const responses = await Promise.all(fetchPromises);
-        responses.forEach(data => processLeaderboard(data)); // Process each leaderboard data
-        return players;
+      const responses = await Promise.all(fetchPromises);
+      responses.forEach(data => processLeaderboard(data));
+      return players;
     } catch (error) {
-        console.error('Error fetching data:', error);
+      // This catches if any fetch (after retries) fails
+      console.error("Leaderboard fetch failed:", error);
+      throw error; // Optional: rethrow if upstream code needs to know
     }
   } else {
     return players;
-  };
+  }
 }
-
 
 function processLeaderboard(data) {
 data.entries.forEach((entry, index) => {
@@ -463,7 +475,16 @@ bw.appendChild(ppb2);
           clientElement.style.backgroundColor = "#2e4182";
         };
       });
-    });
+    })
+    .catch(err => {
+      ct.removeChild(lc);
+
+      const hh3 = document.createElement("p");
+        
+      hh3.textContent = "Leaderboards Failed. Try again later.";
+      hh3.style.fontSize = "32px";
+
+    })
 
 
 const st = document.createElement("div");

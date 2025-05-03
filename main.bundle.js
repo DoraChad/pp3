@@ -489,7 +489,7 @@ bw.appendChild(ppb2);
 
       ct.appendChild(er);
 
-    })
+    });
 
 
 const st = document.createElement("div");

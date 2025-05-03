@@ -65,35 +65,6 @@ const leaderboardImagePath = "images/leaderboards.svg";
   ////////////////////////////////////////////////////////// FUNCTIONS
   
 
-const pop = document.createElement("div");
-pop.style.width = "50%";
-pop.style.height = "100%";
-pop.style.zIndex = "100";
-pop.style.backgroundColor = "#192042";
-pop.style.position = "absolute";
-pop.style.left = "25%";
-pop.style.overflowY = "scroll";
-pop.style.pointerEvents = "auto";
-pop.style.alignItems = "center";
-pop.style.textAlign = "center";
-
-document.getElementById("ui").appendChild(pop);
-
-const headp = document.createElement("p");
-headp.textContent = "Poliest Poly 3";
-headp.style.fontSize = "60px";
-headp.style.color = "white";
-headp.style.padding = "0";
-headp.style.margin = "50px";
-
-pop.appendChild(headp);
-
-const imgp = document.createElement("img");
-imgp.src = "images/pp3thumbnail.png";
-
-pop.appendChild(imgp);
-
-
   
 let autoUpdate = true;
   

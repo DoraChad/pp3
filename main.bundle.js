@@ -112,7 +112,7 @@ async function fetchLeaderboards(batchSize = 5) {
     );
 
     try {
-      or (let i = 0; i < leaderboardUrls.length; i += batchSize) {
+      for (var i = 0; i < leaderboardUrls.length; i += batchSize) {
         const batch = leaderboardUrls.slice(i, i + batchSize);
         const batchPromises = batch.map(url =>
           retryFetch(prefix + url + suffix)
@@ -121,7 +121,7 @@ async function fetchLeaderboards(batchSize = 5) {
         const responses = await Promise.all(batchPromises);
         responses.forEach(data => processLeaderboard(data));
 
-        await new Promise(res => setTimeout(res, 300));
+        await new Promise(resolve => setTimeout(resolve, 300));
       }
     } catch (error) {
       console.error("Leaderboard fetch failed:", error);

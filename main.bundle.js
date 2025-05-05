@@ -112,13 +112,14 @@ async function fetchLeaderboards() {
     );
 
     try {
-      const responses = await Promise.all(fetchPromises);
-      responses.forEach(data => processLeaderboard(data));
-      return players;
+      for (const url of leaderboardUrls) {
+        const fullUrl = prefix + url + suffix;
+        const data = await retryFetch(fullUrl);  // sequential
+        processLeaderboard(data);
+      }
     } catch (error) {
-      // This catches if any fetch (after retries) fails
       console.error("Leaderboard fetch failed:", error);
-      throw error; // Optional: rethrow if upstream code needs to know
+      throw error; 
     }
   } else {
     return players;
@@ -127,19 +128,19 @@ async function fetchLeaderboards() {
 
 function processLeaderboard(data) {
 data.entries.forEach((entry, index) => {
-    const userId = entry.userId;  // Use userId as the identifier
+    const userId = entry.userId; 
     const name = entry.name;
 
     if (!players[userId]) {
         players[userId] = {
-            name: name,  // Store name alongside userId for display
+            name: name,  
             leaderboard_count: 0,
             positions: []
         };
     }
 
     players[userId].leaderboard_count += 1;
-    players[userId].positions.push(index + 1); // Rank is 1-based
+    players[userId].positions.push(index + 1);
 });
 }
 

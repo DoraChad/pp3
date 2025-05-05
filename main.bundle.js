@@ -101,7 +101,7 @@ async function retryFetch(url, retries = 3, delay = 1000) {
   }
 }
 
-async function fetchLeaderboards(batchSize = 5) {
+async function fetchLeaderboards() {
   if (autoUpdate) {
     for (const key in players) {
       delete players[key];
@@ -112,17 +112,9 @@ async function fetchLeaderboards(batchSize = 5) {
     );
 
     try {
-      for (var i = 0; i < leaderboardUrls.length; i += batchSize) {
-        const batch = leaderboardUrls.slice(i, i + batchSize);
-        const batchPromises = batch.map(url =>
-          retryFetch(prefix + url + suffix)
-        );
-
-        const responses = await Promise.all(batchPromises);
-        responses.forEach(data => processLeaderboard(data));
-
-        await new Promise(resolve => setTimeout(resolve, 300));
-      }
+      const responses = await Promise.all(fetchPromises);
+      responses.forEach(data => processLeaderboard(data));
+      return players;
     } catch (error) {
       console.error("Leaderboard fetch failed:", error);
       throw error; 

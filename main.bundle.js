@@ -83,7 +83,7 @@ let autoUpdate = true;
   
 
 const prefix = "https://polyproxy.orangy.cfd/leaderboard?version=0.5.0&trackId=";
-const suffix = "&skip=0&amount=500&onlyVerified=false";
+const suffix = "&skip=0&amount=100&onlyVerified=false";
 
 async function retryFetch(url, retries = 3, delay = 1000) {
   for (let attempt = 0; attempt < retries; attempt++) {

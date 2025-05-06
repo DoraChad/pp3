@@ -62773,4 +62773,7 @@ document.head.appendChild(style);
           }),
             window.addEventListener("keyup", (e) => {
               p.checkKeyBinding(e, Ix.ToggleFpsCounter) && E.toggle();
-     
+            });
+        })();
+    })();
+})();

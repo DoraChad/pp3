@@ -124,11 +124,11 @@ async function fetchLeaderboards() {
       responses.forEach(data => processLeaderboard(data));
 
       // nick <3 -              22 - 30:38.102
-      addTracksToPlayer("c53c5e4c61627b40b6ba304ab66284ffdf827330a2de8bb2765f78e7825b029b", [2])
+      addTracksToPlayer("c53c5e4c61627b40b6ba304ab66284ffdf827330a2de8bb2765f78e7825b029b", [3])
       //xtuov -                      22 - 22.56.775
-      addTracksToPlayer("a1a2a3a22f0c4b452ff6254c82e0c351b79dbd0d46f34ee631cc4f6e7f0ed7f2", [1]) 
+      addTracksToPlayer("a1a2a3a22f0c4b452ff6254c82e0c351b79dbd0d46f34ee631cc4f6e7f0ed7f2", [2]) 
       // ViRoNCZ -                          22   -   30:39.862
-      addTracksToPlayer("3dbd4e51c711107efd90228737fac62d48507c47eda14689a6a8dc17eff4fb68", [3])
+      addTracksToPlayer("3dbd4e51c711107efd90228737fac62d48507c47eda14689a6a8dc17eff4fb68", [4])
 
 
 

@@ -68,7 +68,7 @@ function addTracksToPlayer(userId, newPositions) {
   if (!players[userId]) return; // Do nothing if player doesn't exist
 
   players[userId].positions.push(...newPositions);
-  players[userId].completed += newPositions.length;
+  players[userId].leaderboard_count += newPositions.length;
 }
   
 // cwcinc - addTracksToPlayer("7f72039fcb9128f7e109063626787a56c54adad58b2aa3821479d4a4007332cb", )

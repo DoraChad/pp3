@@ -127,13 +127,14 @@ async function fetchLeaderboards() {
       addTracksToPlayer("c53c5e4c61627b40b6ba304ab66284ffdf827330a2de8bb2765f78e7825b029b", [4])   //22
       //xtuov -                      22 - 22.56.775           19 - 70:43.170
       addTracksToPlayer("a1a2a3a22f0c4b452ff6254c82e0c351b79dbd0d46f34ee631cc4f6e7f0ed7f2", [3])   //22
-      addTracksToPlayer("a1a2a3a22f0c4b452ff6254c82e0c351b79dbd0d46f34ee631cc4f6e7f0ed7f2", [5])    //19
+      addTracksToPlayer("a1a2a3a22f0c4b452ff6254c82e0c351b79dbd0d46f34ee631cc4f6e7f0ed7f2", [6])    //19
       // ViRoNCZ -                          22   -   30:39.862             19 - 57:27.426
       addTracksToPlayer("3dbd4e51c711107efd90228737fac62d48507c47eda14689a6a8dc17eff4fb68", [5]) //22
-      addTracksToPlayer("3dbd4e51c711107efd90228737fac62d48507c47eda14689a6a8dc17eff4fb68", [4])  //19
+      addTracksToPlayer("3dbd4e51c711107efd90228737fac62d48507c47eda14689a6a8dc17eff4fb68", [5])  //19
       // Kroger            22 - 82:42.042
       addTracksToPlayer("2e27bc0c064a3c76d63fc662a2852a2803db689a51cd0784dfbcbdf35a23bb41", [6]) //22
-
+      // Shovel           19 - 36:35.473               22 - 20:06.467   
+      addTracksToPlayer("809978d1e52ca784cba5ca35006a08855b9f264745014348d4956d9eb69de813", [4])  //19         
 
 
       return players;
